@@ -79,5 +79,6 @@ function playGame(){
 
 
 
-alert(playGame()); 
-
+let result = playGame(); 
+alert(result);
+console.log(result);
