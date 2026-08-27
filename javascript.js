@@ -1,7 +1,9 @@
 
 let choice = ""; 
-
-
+let humanScore = 0; 
+let computerScore = 0; 
+let tie = 0; 
+const computerSelection = getComputerChoice(); 
 
 
  
@@ -20,44 +22,41 @@ function getComputerChoice(){
     return choice.toLowerCase(); 
    
  }
-
-function playGame(){
-     function playRound(humanChoice, computerChoice){
-        if (humanChoice === computerChoice){
-            tie += 1; 
-            alert("It's a tie, you are both losers!")
-        }else if (humanChoice === "rock"){
-            if (computerChoice === "paper"){
-                computerScore += 1; 
-                alert("You lose, Paper beats Rock!")
-            }else{
-                humanScore += 1; 
-                alert("You win! Rock beats Scissors.")
-            }
-        }else if (humanChoice === "scissors"){
-            if (computerChoice === "rock"){
-                computerScore += 1; 
-                alert("You lose, Rock beats Scissors!")
-            }else{
-                humanScore += 1; 
-                alert("You win, Scissors beats Paper!")
-            }
-        }else if (humanChoice === "paper"){
-            if (computerChoice === "scissors"){
-                computerScore += 1; 
-                alert("You lose, Scissors beats Paper!")
-            }else{
-                humanScore += 1; 
-                alert("You win, Paper beats Rock!")
-            }
+function playRound(humanChoice, computerChoice){
+    if (humanChoice === computerChoice){
+        tie += 1; 
+        return "It's a tie, you are both losers!"
+    }else if (humanChoice === "rock"){
+        if (computerChoice === "paper"){
+            computerScore += 1; 
+            return "You lose, Paper beats Rock!"
         }else{
-            return "Please type Paper, Rock, or Scissors and not whatever nonsense you have writen. Thanks"
+            humanScore += 1; 
+            return "You win! Rock beats Scissors."
         }
+    }else if (humanChoice === "scissors"){
+        if (computerChoice === "rock"){
+            computerScore += 1; 
+            return "You lose, Rock beats Scissors!"
+        }else{
+            humanScore += 1; 
+            return "You win, Scissors beats Paper!"
+        }
+    }else if (humanChoice === "paper"){
+        if (computerChoice === "scissors"){
+            computerScore += 1; 
+            return "You lose, Scissors beats Paper!"
+        }else{
+            humanScore += 1; 
+            return "You win, Paper beats Rock!"
+        }
+    }else{
+        return "Please type Paper, Rock, or Scissors and not whatever nonsense you have writen. Thanks"
     }
+}
+function playGame(){
+    
 
-    let humanScore = 0; 
-    let computerScore = 0; 
-    let tie = 0; 
     
     for (i = 0; i < 5; i++) {
         const humanSelection = getHumanChoice(); 
@@ -77,8 +76,121 @@ function playGame(){
     
 }
 
+const buttonPaper = document.createElement("button"); 
 
 
-let result = playGame(); 
-alert(result);
-console.log(result);
+const PaperIcon = document.createElement("img"); 
+PaperIcon.setAttribute("src", "images/paperIcon.png");
+PaperIcon.setAttribute("width", "200px");
+buttonPaper.appendChild(PaperIcon);
+
+const buttonRock = document.createElement("button");
+const rockIcon = document.createElement("img");
+rockIcon.setAttribute("src", "images/rockIcon.png");
+rockIcon.setAttribute("width", "200px");
+buttonRock.appendChild(rockIcon);
+
+const buttonScissors = document.createElement("button");
+const scissorsIcon = document.createElement("img");
+scissorsIcon.setAttribute("src", "images/scissorsIcon.png");
+scissorsIcon.setAttribute("width", "200px");
+buttonScissors.appendChild(scissorsIcon);
+
+
+
+
+
+const body = document.querySelector("body"); 
+body.appendChild(buttonPaper); 
+body.appendChild(buttonRock);
+body.appendChild(buttonScissors);
+
+
+
+
+const div = document.createElement("div"); 
+body.appendChild(div);
+
+const result = document.createElement("p");
+div.appendChild(result);
+
+const playerWinDisplay = document.createElement("p");
+const playerLossDisplay = document.createElement("p");
+const playerTieDisplay = document.createElement("p");
+div.appendChild(playerWinDisplay);
+div.appendChild(playerLossDisplay);
+div.appendChild(playerTieDisplay);
+function updateScore(){
+    playerWinDisplay.textContent = "Wins: " + humanScore; 
+    playerLossDisplay.textContent = "Lost: " + computerScore;
+    playerTieDisplay.textContent = "Ties: " + tie; 
+}
+
+playerWinDisplay.textContent = "Wins: " + humanScore; 
+playerLossDisplay.textContent = "Lost: " + computerScore;
+playerTieDisplay.textContent = "Ties: " + tie; 
+
+buttonPaper.addEventListener("click", (event)=>{
+    const computerSelection = getComputerChoice(); 
+    const resultText = playRound("paper", computerSelection);
+    result.textContent = resultText; 
+    updateScore(); 
+    PaperIcon.setAttribute("src", "images/paperIcon.png")
+    checkWhoWon();
+
+})
+
+buttonPaper.addEventListener("mousedown", ()=> PaperIcon.setAttribute("src", "images/paperIconDown.png"));
+buttonRock.addEventListener("mousedown", ()=> rockIcon.setAttribute("src", "images/rockIconDown.png"));
+buttonScissors.addEventListener("mousedown", ()=> scissorsIcon.setAttribute("src", "images/scissorsIconDown.png"));
+
+body.addEventListener("mouseup", (event)=>{
+    PaperIcon.setAttribute("src", "images/paperIcon.png");
+    rockIcon.setAttribute("src", "images/rockIcon.png");
+    scissorsIcon.setAttribute("src", "images/scissorsIcon.png");
+;})
+
+
+buttonRock.addEventListener("click", (event)=>{
+    const computerSelection = getComputerChoice(); 
+    const resultText = playRound("rock", computerSelection);
+    result.textContent = resultText; 
+    updateScore();
+    checkWhoWon(); 
+})
+
+buttonScissors.addEventListener("click", (event)=>{
+    const computerSelection = getComputerChoice(); 
+    const resultText = playRound("scissors", computerSelection);
+    result.textContent = resultText; 
+    updateScore(); 
+    checkWhoWon(); 
+    
+    
+})
+function checkWhoWon(){
+    if (humanScore === 5){
+        alert("You won!");
+        humanScore = 0; 
+        computerScore = 0; 
+        tie = 0; 
+        updateScore(); 
+    }
+    if (computerScore === 5){
+        alert("You lost!");
+        humanScore = 0; 
+        computerScore = 0; 
+        tie = 0; 
+        updateScore(); 
+    }
+}
+
+
+
+
+
+
+// old logic to play the game 5 times automatically
+// let result = playGame(); 
+// alert(result);
+// console.log(result);
