@@ -1,0 +1,78 @@
+.buttons {
+    display: flex; 
+    flex-direction: row;
+    justify-content: center;
+    gap: 16px; 
+    flex-wrap: wrap;
+}
+
+.buttonNames {
+    display: flex; 
+    flex-direction: row;
+    justify-content: center;
+    gap: 16px; 
+    flex-wrap: wrap;
+
+}
+
+body {
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.scores{
+    display: flex;
+    justify-content: center;
+    gap: 60px; 
+    font-size: 20px;
+    font-weight: 900;
+}
+
+.choiceresult{
+    display: flex; 
+    justify-content: center;
+     
+    flex-wrap: nowrap; 
+    
+    
+     
+}
+
+.choices{
+    display:flex;
+    flex-direction: column;
+    width: 300px; 
+}
+
+.scoreHeading{
+    display: flex;
+    justify-content: space-evenly;
+    gap: 50px;
+    flex-wrap: wrap;
+    
+}
+
+.scoreGroup{
+    display: flex;
+    flex-direction: column;
+    
+    flex-wrap: wrap;
+
+}
+
+.results{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 300px; ;
+    align-items: center;
+}
+
+.mainHeading{
+    display: flex; 
+}
+
+h2{
+    width: 216px;
+    text-align: center;
+
+}

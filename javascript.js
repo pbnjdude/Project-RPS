@@ -6,6 +6,7 @@ let tie = 0;
 const computerSelection = getComputerChoice(); 
 let resultColor = "white";
 
+
  
 function getComputerChoice(){
     let number = Math.floor(Math.random() * 3)
@@ -105,18 +106,38 @@ buttonScissors.appendChild(scissorsIcon);
 
 
 
+const body = document.querySelector(".mainDiv"); 
+const buttonDiv = document.createElement("div");
 
+const buttonsGroup = document.querySelector(".buttonsGroup")
+buttonsGroup.appendChild(buttonDiv);
+buttonDiv.setAttribute("class", "buttons");
 
-const body = document.querySelector("body"); 
-body.appendChild(buttonPaper); 
-body.appendChild(buttonRock);
-body.appendChild(buttonScissors);
+buttonDiv.appendChild(buttonPaper); 
+buttonDiv.appendChild(buttonRock);
+buttonDiv.appendChild(buttonScissors);
 
 
 
 
 const div = document.createElement("div"); 
+div.setAttribute("class", "scores");
 body.appendChild(div);
+
+const scoreGroup = document.createElement("div");
+scoreGroup.setAttribute("class", "scoreGroup");
+body.appendChild(scoreGroup);
+
+const scoreHeading = document.createElement("div");
+scoreHeading.setAttribute("class", "scoreHeading");
+scoreGroup.appendChild(scoreHeading);
+
+// const playerHeading = document.createElement("p");
+// playerHeading.textContent = "You";
+// const commputerHeading = document.createElement("p");
+// commputerHeading.textContent = "Computer";
+// scoreHeading.appendChild(playerHeading);
+// scoreHeading.appendChild(commputerHeading);
 
 
 
@@ -127,18 +148,27 @@ div.appendChild(playerWinDisplay);
 div.appendChild(playerLossDisplay);
 div.appendChild(playerTieDisplay);
 function updateScore(){
-    playerWinDisplay.textContent = "Wins: " + humanScore; 
+    playerWinDisplay.textContent = "Won: " + humanScore; 
     playerLossDisplay.textContent = "Lost: " + computerScore;
-    playerTieDisplay.textContent = "Ties: " + tie; 
+    playerTieDisplay.textContent = "Tied: " + tie; 
 }
 
-playerWinDisplay.textContent = "Wins: " + humanScore; 
+playerWinDisplay.textContent = "Won: " + humanScore; 
 playerLossDisplay.textContent = "Lost: " + computerScore;
-playerTieDisplay.textContent = "Ties: " + tie; 
+playerTieDisplay.textContent = "Tied: " + tie; 
+
+const choiceResultDiv = document.createElement("div");
+choiceResultDiv.setAttribute("class", "choiceresult")
+scoreGroup.appendChild(choiceResultDiv);
+
+const choiceGroup = document.createElement("ul");
+choiceGroup.setAttribute("class", "choices")
+choiceResultDiv.appendChild(choiceGroup);
+const resultGroup = document.createElement("ul");
+resultGroup.setAttribute("class", "results")
+choiceResultDiv.appendChild(resultGroup);
 
 
-const result = document.createElement("ul");
-body.appendChild(result);
 
 buttonPaper.addEventListener("mousedown", ()=> PaperIcon.setAttribute("src", "images/paperIconDown.png"));
 buttonRock.addEventListener("mousedown", ()=> rockIcon.setAttribute("src", "images/rockIconDown.png"));
@@ -164,16 +194,19 @@ buttonScissors.addEventListener("click", (event)=>{
     
 })
 
+
+
+
 function updatePage(choice){
     const computerSelection = getComputerChoice(); 
     const resultText = playRound(choice, computerSelection);
     const resultChoiceText = document.createElement("li");
     const resultListItem = document.createElement("li");
-    resultChoiceText.textContent = "You: " + choice + "  Computer: " + computerSelection;
+    resultChoiceText.textContent = "You: " + choice.toUpperCase() + "  Computer: " + computerSelection.toUpperCase();
     resultListItem.textContent = resultText; 
     resultListItem.style.backgroundColor = resultColor;
-    result.appendChild(resultChoiceText);
-    result.appendChild(resultListItem);
+    choiceGroup.appendChild(resultChoiceText);
+    resultGroup.appendChild(resultListItem);
     
     updateScore(); 
     checkWhoWon(); 
