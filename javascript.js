@@ -4,7 +4,7 @@ let humanScore = 0;
 let computerScore = 0; 
 let tie = 0; 
 const computerSelection = getComputerChoice(); 
-
+let resultColor = "white";
 
  
 function getComputerChoice(){
@@ -25,29 +25,36 @@ function getComputerChoice(){
 function playRound(humanChoice, computerChoice){
     if (humanChoice === computerChoice){
         tie += 1; 
+        resultColor = "yellow";
         return "It's a tie, you are both losers!"
     }else if (humanChoice === "rock"){
         if (computerChoice === "paper"){
             computerScore += 1; 
+            resultColor = "red";
             return "You lose, Paper beats Rock!"
         }else{
             humanScore += 1; 
+            resultColor = "green";
             return "You win! Rock beats Scissors."
         }
     }else if (humanChoice === "scissors"){
         if (computerChoice === "rock"){
             computerScore += 1; 
+            resultColor = "red";
             return "You lose, Rock beats Scissors!"
         }else{
             humanScore += 1; 
+            resultColor = "green";
             return "You win, Scissors beats Paper!"
         }
     }else if (humanChoice === "paper"){
         if (computerChoice === "scissors"){
             computerScore += 1; 
+            resultColor = "red";
             return "You lose, Scissors beats Paper!"
         }else{
             humanScore += 1; 
+            resultColor = "green";
             return "You win, Paper beats Rock!"
         }
     }else{
@@ -111,8 +118,7 @@ body.appendChild(buttonScissors);
 const div = document.createElement("div"); 
 body.appendChild(div);
 
-const result = document.createElement("p");
-div.appendChild(result);
+
 
 const playerWinDisplay = document.createElement("p");
 const playerLossDisplay = document.createElement("p");
@@ -130,15 +136,9 @@ playerWinDisplay.textContent = "Wins: " + humanScore;
 playerLossDisplay.textContent = "Lost: " + computerScore;
 playerTieDisplay.textContent = "Ties: " + tie; 
 
-buttonPaper.addEventListener("click", (event)=>{
-    const computerSelection = getComputerChoice(); 
-    const resultText = playRound("paper", computerSelection);
-    result.textContent = resultText; 
-    updateScore(); 
-    PaperIcon.setAttribute("src", "images/paperIcon.png")
-    checkWhoWon();
 
-})
+const result = document.createElement("ul");
+body.appendChild(result);
 
 buttonPaper.addEventListener("mousedown", ()=> PaperIcon.setAttribute("src", "images/paperIconDown.png"));
 buttonRock.addEventListener("mousedown", ()=> rockIcon.setAttribute("src", "images/rockIconDown.png"));
@@ -150,24 +150,38 @@ body.addEventListener("mouseup", (event)=>{
     scissorsIcon.setAttribute("src", "images/scissorsIcon.png");
 ;})
 
+buttonPaper.addEventListener("click", (event)=>{
+    updatePage("paper");
 
+})
 buttonRock.addEventListener("click", (event)=>{
-    const computerSelection = getComputerChoice(); 
-    const resultText = playRound("rock", computerSelection);
-    result.textContent = resultText; 
-    updateScore();
-    checkWhoWon(); 
+    updatePage("rock"); 
 })
 
 buttonScissors.addEventListener("click", (event)=>{
-    const computerSelection = getComputerChoice(); 
-    const resultText = playRound("scissors", computerSelection);
-    result.textContent = resultText; 
-    updateScore(); 
-    checkWhoWon(); 
+    updatePage("scissors");
     
     
 })
+
+function updatePage(choice){
+    const computerSelection = getComputerChoice(); 
+    const resultText = playRound(choice, computerSelection);
+    const resultChoiceText = document.createElement("li");
+    const resultListItem = document.createElement("li");
+    resultChoiceText.textContent = "You: " + choice + "  Computer: " + computerSelection;
+    resultListItem.textContent = resultText; 
+    resultListItem.style.backgroundColor = resultColor;
+    result.appendChild(resultChoiceText);
+    result.appendChild(resultListItem);
+    
+    updateScore(); 
+    checkWhoWon(); 
+}
+function removeResults(result){
+    results.remove(); 
+}
+
 function checkWhoWon(){
     if (humanScore === 5){
         alert("You won!");
@@ -175,6 +189,12 @@ function checkWhoWon(){
         computerScore = 0; 
         tie = 0; 
         updateScore(); 
+        resultColor = "white"
+        const resultTexts = document.querySelectorAll("li");
+        for (let i in resultTexts){
+            const removable = resultTexts[i];
+            removable.remove();  
+        }
     }
     if (computerScore === 5){
         alert("You lost!");
@@ -182,7 +202,14 @@ function checkWhoWon(){
         computerScore = 0; 
         tie = 0; 
         updateScore(); 
+        resultColor = "white"
+        const resultTexts = document.querySelectorAll("li");
+        for (let i in resultTexts){
+            const removable = resultTexts[i];
+            removable.remove();  
+        }
     }
+
 }
 
 
