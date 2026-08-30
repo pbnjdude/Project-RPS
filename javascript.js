@@ -87,16 +87,17 @@ function playGame(){
 const buttonPaper = document.createElement("button"); 
 
 
-const PaperIcon = document.createElement("img"); 
-PaperIcon.setAttribute("src", "images/paperIcon.png");
-PaperIcon.setAttribute("width", "200px");
-buttonPaper.appendChild(PaperIcon);
-
 const buttonRock = document.createElement("button");
 const rockIcon = document.createElement("img");
 rockIcon.setAttribute("src", "images/rockIcon.png");
 rockIcon.setAttribute("width", "200px");
 buttonRock.appendChild(rockIcon);
+
+const PaperIcon = document.createElement("img"); 
+PaperIcon.setAttribute("src", "images/paperIcon.png");
+PaperIcon.setAttribute("width", "200px");
+buttonPaper.appendChild(PaperIcon);
+
 
 const buttonScissors = document.createElement("button");
 const scissorsIcon = document.createElement("img");
@@ -113,11 +114,15 @@ const buttonsGroup = document.querySelector(".buttonsGroup")
 buttonsGroup.appendChild(buttonDiv);
 buttonDiv.setAttribute("class", "buttons");
 
-buttonDiv.appendChild(buttonPaper); 
 buttonDiv.appendChild(buttonRock);
+buttonDiv.appendChild(buttonPaper); 
 buttonDiv.appendChild(buttonScissors);
 
 
+const playAgainButton = document.querySelector(".playAgainButton");
+playAgainButton.addEventListener("click", (event)=> {
+    overlayClose();
+})
 
 
 const div = document.createElement("div"); 
@@ -216,8 +221,8 @@ function removeResults(result){
 }
 
 function checkWhoWon(){
-    if (humanScore === 5){
-        alert("You won!");
+    if (humanScore === 5){;
+        overlayOn("YOU WON!")
         humanScore = 0; 
         computerScore = 0; 
         tie = 0; 
@@ -230,7 +235,7 @@ function checkWhoWon(){
         }
     }
     if (computerScore === 5){
-        alert("You lost!");
+        overlayOn("YOU LOST!")
         humanScore = 0; 
         computerScore = 0; 
         tie = 0; 
@@ -247,7 +252,30 @@ function checkWhoWon(){
 
 
 
+function overlayOn(resultText){
+    const overlay = document.getElementById("finalResult");
+    overlay.style.width = "100%";
+    overlay.style.display = "flex";
+    overlay.style.flexDirection = "column"; 
+    const overlayText = document.getElementById("overlayText");
+    overlayText.textContent = resultText;
+    overlay.appendChild(playAgainButton);
+    playAgainButton.setAttribute("class", "overlayOpen");
+    
 
+    
+
+    
+
+}
+
+function overlayClose(){
+    const overlay = document.getElementById("finalResult");
+    overlay.style.width = "0%";
+    overlay.style.display = "none";
+    const overlayText = document.getElementById("overlayText");
+    overlayText.textContent = "";
+}
 
 
 // old logic to play the game 5 times automatically
